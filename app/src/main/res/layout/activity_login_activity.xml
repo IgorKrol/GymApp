@@ -7,10 +7,10 @@
     tools:context=".Login">
 
     <Button
-        android:id="@+id/manager_button"
+        android:id="@+id/imployee_button"
         android:layout_width="205dp"
         android:layout_height="127dp"
-        android:text="Manager"
+        android:text="Employee"
         tools:layout_editor_absoluteX="103dp"
         tools:layout_editor_absoluteY="464dp" />
 
