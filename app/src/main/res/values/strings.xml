@@ -3,4 +3,7 @@
     <string name="devices">devices</string>
     <string name="instractors">instractors</string>
     <string name="fitness_advice">fitness advice</string>
+    <string name="setting">Setting</string>
+    <string name="search">Search</string>
+    <string name="login">Login</string>
 </resources>
