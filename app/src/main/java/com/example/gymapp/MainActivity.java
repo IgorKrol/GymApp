@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.login:
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
                 return true;
+            case R.id.manage:
+                startActivity(new Intent(MainActivity.this,ManagerActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -20,9 +20,9 @@ public class CustomAdapter extends BaseAdapter {
 
     private LayoutInflater lInflater;
 
-    private List<InstractorDataForList> listStorage;
+    private List<InstractorData> listStorage;
 
-    public CustomAdapter(Context context, List<InstractorDataForList> customizedListView) {
+    public CustomAdapter(Context context, List<InstractorData> customizedListView) {
 
         lInflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
