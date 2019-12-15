@@ -22,6 +22,13 @@ public class InstractorData {
         this.info = info;
         this.imageId = R.drawable.ic_launcher_foreground;
     }
+    public InstractorData(InstractorData instractorData){
+        this.name = instractorData.name;
+        this.birthday = instractorData.birthday;
+        this.adress = instractorData.adress;
+        this.info = instractorData.info;
+        this.imageId = R.drawable.ic_launcher_foreground;
+    }
     public String getId(){
         return id;
     }
@@ -75,5 +82,10 @@ public class InstractorData {
         this.name = name;
 
     }
+
+    public String toString(){
+        return id+","+name+","+birthday+","+adress+","+info+","+imageId;
+    }
+
 
 }

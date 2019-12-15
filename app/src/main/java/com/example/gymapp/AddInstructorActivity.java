@@ -40,7 +40,7 @@ public class AddInstructorActivity extends AppCompatActivity {
         btnAddInst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InstractorData insData = new InstractorData(name_input.getText().toString(),birthday_input.getText().toString(),adress_input.toString(),info_input.toString(),0);
+                InstractorData insData = new InstractorData(name_input.getText().toString(),birthday_input.getText().toString(),adress_input.toString(),info_input.toString(),R.drawable.ic_launcher_foreground);
                 insData.setId(dbRootRef.push().getKey());
                 dbRootRef.child("Instructors").child(insData.getId()).setValue(insData);
             }
