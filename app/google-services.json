@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "732230222738-psc2fs1v1jvf6ujvb3fpv9f2ef7c76lq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gymapp",
+            "certificate_hash": "61c60b499205b59210ae12e5c29d0bba36f9d392"
+          }
+        },
+        {
           "client_id": "732230222738-lblldes3llk3ckajn26vl0a24ser0vbj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

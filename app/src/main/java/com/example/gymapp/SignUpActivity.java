@@ -25,31 +25,43 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.os.Bundle;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
+public class  SignUpActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText user_email,user_password,user_name;
+    EditText user_email,user_password,user_name,user_height,user_weight,confirm_password;
     TextView login_btn_on_signup;
     Button signup_btn;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         user_email = (EditText)findViewById(R.id.user_email);
         user_password = (EditText)findViewById(R.id.user_password);
+        confirm_password = (EditText)findViewById(R.id.confirm_password);
         user_name = (EditText)findViewById(R.id.user_name);
+        user_height = (EditText)findViewById(R.id.height);
+        user_weight = (EditText)findViewById(R.id.weight);
         signup_btn = (Button) findViewById(R.id.register_btn);
         login_btn_on_signup = (TextView) findViewById(R.id.login_btn_on_signup);
         login_btn_on_signup.setOnClickListener(this);
         signup_btn.setOnClickListener(this);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
     }
 
     @Override
@@ -79,7 +91,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(SignUpActivity.this, "Enter Name!!",
                     Toast.LENGTH_SHORT).show();
         }
-
+        else if((user_height.getText().toString()).equals("")){
+            Toast.makeText(SignUpActivity.this, "Enter Height!!",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if((user_weight.getText().toString()).equals("")){
+            Toast.makeText(SignUpActivity.this, "Enter Weight!!",
+                    Toast.LENGTH_SHORT).show();
+        }
+        //////////////
+        else if(!((user_password.getText().toString()).equals(confirm_password.getText().toString())))
+        {
+            Toast.makeText(SignUpActivity.this, "Passwords don't match",
+                    Toast.LENGTH_SHORT).show();
+        }
+        /////////////
         else {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -98,10 +124,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    /*----------For saving image and user name in Firebase Database-------*/
+    /*----------For saving user in Firebase Database-------*/
     private void userProfile() {
         user = mAuth.getCurrentUser();
+        String userID = user.getUid();
+        String email = user_email.getText().toString();
+        String name = user_name.getText().toString();
+        String weight = user_weight.getText().toString();
+        String height = user_height.getText().toString();
         if(user != null){
+            User newUser = new User(email,name,weight,height);
+            myRef.child("Users").child(userID).setValue(newUser);
+
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                     .setDisplayName(user_name.getText().toString())
                     .setPhotoUri(null).build();
