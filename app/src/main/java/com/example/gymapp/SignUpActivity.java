@@ -3,17 +3,23 @@ package com.example.gymapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,21 +36,23 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import android.os.Bundle;
 
-public class  SignUpActivity extends AppCompatActivity implements View.OnClickListener{
+import java.util.Calendar;
+
+public class  SignUpActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
 
     EditText user_email,user_password,user_name,user_height,user_weight,confirm_password;
-    TextView login_btn_on_signup;
-    Button signup_btn;
+    TextView login_btn_on_signup,dateText;
+    Button signup_btn, dateButton;
+CheckBox checkFemale,checkMale;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
@@ -62,7 +70,66 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
+
+        //*-----Date Chooser-----*//
+dateText = findViewById(R.id.date_txt);
+findViewById(R.id.date_btn).setOnClickListener(new View.OnClickListener(){
+    @Override
+    public void onClick(View v)
+    {
+        showDatePickerDialog();
     }
+
+});
+
+
+//*-----Gender Chooser-----*//
+        checkFemale = (CheckBox)findViewById(R.id.female);
+        checkMale = (CheckBox)findViewById(R.id.male);
+
+        checkFemale.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                checkFemale.setChecked(true);
+                checkMale.setChecked(false);
+
+            }
+        });
+        checkMale.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                checkMale.setChecked(true);
+                checkFemale.setChecked(false);
+            }
+        });
+
+
+    }
+    /////////////date related///////////////
+    private void showDatePickerDialog()
+    {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+    ////////////////////////////////////////
+    /////////////date related///////////////
+    @Override
+    public void onDateSet(DatePicker view,int year,int month,int dayofMonth)
+    {
+        String date = dayofMonth + "/" + month + "/" + year;
+        dateText.setText(date);
+    }
+    ///////////////////////////////////////
 
     @Override
     public void onClick(View v) {
@@ -106,6 +173,11 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
                     Toast.LENGTH_SHORT).show();
         }
         /////////////
+        else if((dateText.getText().toString().equals("")))
+        {
+            Toast.makeText(SignUpActivity.this, "Choose Birthday!!",
+                    Toast.LENGTH_SHORT).show();
+        }
         else {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -127,13 +199,20 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
     /*----------For saving user in Firebase Database-------*/
     private void userProfile() {
         user = mAuth.getCurrentUser();
+        String gender;
         String userID = user.getUid();
         String email = user_email.getText().toString();
         String name = user_name.getText().toString();
         String weight = user_weight.getText().toString();
         String height = user_height.getText().toString();
+        String birthday = dateText.getText().toString();
+        if(checkMale.isChecked())
+            gender="male";
+        else
+            gender="female";
+
         if(user != null){
-            User newUser = new User(email,name,weight,height);
+            User newUser = new User(email,name,weight,height,birthday,gender);
             myRef.child("Users").child(userID).setValue(newUser);
 
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
