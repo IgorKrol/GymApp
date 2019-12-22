@@ -11,16 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignoutActivity"></activity>
-        <activity android:name=".ForgotPasswordActivity"></activity>
-
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".ManagerActivity"></activity>
-        <activity android:name=".AddInstructorActivity"></activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
-
+        <activity android:name=".My_appointments"></activity>
+        <activity android:name=".Instructor_info" />
+        <activity android:name=".SignoutActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ManagerActivity" />
+        <activity android:name=".AddInstructorActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,14 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".instructors">
-
-        </activity>
-
-
-
-
+        <activity android:name=".instructors" />
     </application>
 
 </manifest>

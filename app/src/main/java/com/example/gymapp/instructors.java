@@ -3,6 +3,7 @@ package com.example.gymapp;
 //import android.support.v7.app.ActionBarActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.icu.util.IslamicCalendar;
 import android.os.Bundle;
 
@@ -82,8 +83,15 @@ public class instructors extends AppCompatActivity {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-//                Toast.makeText(getApplicationContext(), "Position " + position, Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(instructors.this, Instructor_info.class);
+                InstractorData ins=listViewItems.get(position);
+                intent.putExtra("name", ins.getName());
+                intent.putExtra("address",ins.getAddress());
+                intent.putExtra("birthday",ins.getBirthday());
+                intent.putExtra("image_id",ins.getImageId());
+                intent.putExtra("info",ins.getInfo());
+                intent.putExtra("id",ins.getId());
+                startActivity(intent);
 
             }
 

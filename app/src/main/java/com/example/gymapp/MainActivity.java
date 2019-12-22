@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.manage:
                 startActivity(new Intent(MainActivity.this,ManagerActivity.class));
                 return true;
+            case R.id.appointment_menu:
+                startActivity(new Intent(MainActivity.this,My_appointments.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
