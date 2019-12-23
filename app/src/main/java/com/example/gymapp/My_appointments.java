@@ -38,7 +38,7 @@ public class My_appointments extends AppCompatActivity {
 
                     Appointment appointment = data.getValue(Appointment.class);
                     if (appointment.getDate() != null) {
-                        if(appointment.getUser_id()==mAuth.getCurrentUser().getUid()) {
+                        if(appointment.getUser_id().equals(mAuth.getCurrentUser().getUid())) {
                             out+="Date:   " + appointment.getDate().toString() + "\n" + "with:   " +dbRef.child("Instructors").child(appointment.getInstructor_id()).child("name").toString()+"\n";
 
                         }
