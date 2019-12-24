@@ -43,7 +43,7 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
     EditText user_email,user_password,user_name,user_height,user_weight,confirm_password;
     TextView login_btn_on_signup,dateText;
     Button signup_btn, dateButton;
-CheckBox checkFemale,checkMale;
+    CheckBox checkFemale,checkMale;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseDatabase mFirebaseDatabase;
@@ -72,15 +72,15 @@ CheckBox checkFemale,checkMale;
         myRef = mFirebaseDatabase.getReference();
 
         //*-----Date Chooser-----*//
-dateText = findViewById(R.id.date_txt);
-findViewById(R.id.date_btn).setOnClickListener(new View.OnClickListener(){
-    @Override
-    public void onClick(View v)
-    {
-        showDatePickerDialog();
-    }
+        dateText = findViewById(R.id.date_txt);
+        findViewById(R.id.date_btn).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                showDatePickerDialog();
+            }
 
-});
+        });
 
 
 //*-----Gender Chooser-----*//

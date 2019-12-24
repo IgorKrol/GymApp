@@ -30,21 +30,29 @@ public class My_appointments extends AppCompatActivity {
         dbRef=myDB.getReference();
         mAuth = FirebaseAuth.getInstance();
         textView=(TextView)findViewById(R.id.my_appointments_txt);
-        ValueEventListener vel = dbRef.child("Appointment").addValueEventListener(new ValueEventListener() {
+        ValueEventListener vel = dbRef.addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()) {
 
+                String instructor_name;
+
+                DataSnapshot appointmentsDataSnapShot = dataSnapshot.child("Appointment");
+                DataSnapshot instructorDataSnapShot = dataSnapshot.child("Instructors");
+                out="";
+                for(DataSnapshot data : appointmentsDataSnapShot.getChildren()) {
                     Appointment appointment = data.getValue(Appointment.class);
-                    if (appointment.getDate() != null) {
-                        if(appointment.getUser_id().equals(mAuth.getCurrentUser().getUid())) {
-                            out+="Date:   " + appointment.getDate().toString() + "\n" + "with:   " +dbRef.child("Instructors").child(appointment.getInstructor_id()).child("name").toString()+"\n";
-
+                    if (appointment.getDate() != null) {    //if there are dates
+                        if(appointment.getUser_id().equals(mAuth.getCurrentUser().getUid())) {  //if appointment for current user
+                            for(DataSnapshot instDSSdata : instructorDataSnapShot.getChildren()) {
+                                InstractorData inst = instDSSdata.getValue(InstractorData.class);
+                                if(inst.getId().equals(appointment.getInstructor_id())){    //if right instructor
+                                    out+="Date:   " + appointment.getDate().toString() + "\n" + "with:   " + inst.getName()+"\n";
+                                }
+                            }
                         }
                     }
                 }
-                Log.i("test",out);
                 textView.setText(out);
             }
 

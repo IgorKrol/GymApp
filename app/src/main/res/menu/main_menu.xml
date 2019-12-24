@@ -5,9 +5,13 @@
         android:id="@+id/login"
         android:title="@string/login"/>
     <item
+        android:id="@+id/logout"
+        android:title="@string/Logout"/>
+    <item
         android:id="@+id/manage"
         android:title="@string/manage"/>
     <item
         android:id="@+id/appointment_menu"
         android:title="@string/Appointment"/>
+
 </menu>
