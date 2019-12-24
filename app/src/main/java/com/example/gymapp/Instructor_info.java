@@ -62,7 +62,7 @@ public class Instructor_info extends AppCompatActivity implements  DatePickerDia
     public void onDateSet(DatePicker view,int year,int month,int dayofMonth)
     {
         String date = dayofMonth + "/" + month + "/" + year;
-        Appointment appointment=new Appointment(date,getIntent().getStringExtra("id"),mAuth.getCurrentUser().getUid());
+        Appointment appointment=new Appointment(date,getIntent().getStringExtra("id").toString(),mAuth.getCurrentUser().getUid());
         myRef.child("Appointment").child(myRef.push().getKey()).setValue(appointment);
     }
 

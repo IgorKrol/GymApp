@@ -1,5 +1,6 @@
 package com.example.gymapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -22,7 +23,6 @@ public class My_appointments extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e("check","12344321");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_appointments);
 
@@ -31,20 +31,31 @@ public class My_appointments extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         textView=(TextView)findViewById(R.id.my_appointments_txt);
         ValueEventListener vel = dbRef.child("Appointment").addValueEventListener(new ValueEventListener() {
-
+        String name="";
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
-
                     Appointment appointment = data.getValue(Appointment.class);
                     if (appointment.getDate() != null) {
-                        if(appointment.getUser_id().equals(mAuth.getCurrentUser().getUid())) {
-                            out+="Date:   " + appointment.getDate().toString() + "\n" + "with:   " +dbRef.child("Instructors").child(appointment.getInstructor_id()).child("name").toString()+"\n";
+                        if (appointment.getUser_id().equals(mAuth.getCurrentUser().getUid())) {
+                            dbRef=myDB.getReference();
+                            dbRef.child("Instructors").child(appointment.getInstructor_id()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange( DataSnapshot dataSnapshot) {
+                                    InstractorData instractorData=dataSnapshot.getValue(InstractorData.class);
+                                    name=instractorData.getName().toString();
+                                }
 
+                                @Override
+                                public void onCancelled( DatabaseError databaseError) {
+                                    System.out.println("The read failed: " + databaseError.getCode());
+                                }
+                            });
+                            Log.i("name",name);
+                            out += "Date:   " + appointment.getDate().toString() + "\n" + "with:   "+name+ "\n";
                         }
                     }
                 }
-                Log.i("test",out);
                 textView.setText(out);
             }
 
