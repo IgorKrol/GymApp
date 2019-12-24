@@ -1,9 +1,9 @@
 package com.example.gymapp;
 
 public class Appointment {
-    String date;
-    String instructor_id;
-    String user_id;
+    private String date;
+    private String instructor_id;
+    private String user_id;
 
     public Appointment() {
     }
