@@ -50,5 +50,10 @@ public class SignoutActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(SignoutActivity.this,"Logged out!",Toast.LENGTH_LONG).show();
             startActivity(new Intent(SignoutActivity.this,LoginActivity.class));
         }
-}
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }

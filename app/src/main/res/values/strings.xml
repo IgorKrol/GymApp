@@ -3,4 +3,6 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="login">login</string>
     <string name="manage">manage</string>
+    <string name="Appointment">Appointment</string>
+    <string name="Logout">Logout</string>
 </resources>

@@ -9,17 +9,24 @@ public class InstractorData {
 
     private String name;
     private String birthday;
-    private String adress;
+    private String address;
     private String info;
     private int imageId= R.drawable.ic_launcher_foreground;
     private String id;
 
     public InstractorData(){}
-    public InstractorData(String name, String birthday, String adress, String info, int imageId){
+    public InstractorData(String name, String birthday, String address, String info, int imageId){
         this.name = name;
         this.birthday = birthday;
-        this.adress = adress;
+        this.address = address;
         this.info = info;
+        this.imageId = R.drawable.ic_launcher_foreground;
+    }
+    public InstractorData(InstractorData instractorData){
+        this.name = instractorData.name;
+        this.birthday = instractorData.birthday;
+        this.address = instractorData.address;
+        this.info = instractorData.info;
         this.imageId = R.drawable.ic_launcher_foreground;
     }
     public String getId(){
@@ -36,12 +43,12 @@ public class InstractorData {
         this.birthday = birthday;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getInfo() {
@@ -75,5 +82,10 @@ public class InstractorData {
         this.name = name;
 
     }
+
+    public String toString(){
+        return id+","+name+","+birthday+","+address+","+info+","+imageId;
+    }
+
 
 }

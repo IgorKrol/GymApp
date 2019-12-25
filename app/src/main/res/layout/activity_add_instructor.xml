@@ -19,13 +19,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/adress_input"
+        android:id="@+id/address_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Adress"
+        android:text="Address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/birthday_input" />
@@ -40,7 +40,7 @@
         android:text="Additional info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adress_input" />
+        app:layout_constraintTop_toBottomOf="@+id/address_input" />
 
     <Button
         android:id="@+id/add_inst_button"
