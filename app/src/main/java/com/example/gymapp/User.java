@@ -11,9 +11,9 @@ public class User {
     public String user_gender;
     public boolean member = false;
 
-    public User(String email,String name,String weight,String height,String birthday,String gender)
+    public User(String id,String email,String name,String weight,String height,String birthday,String gender)
     {
-
+        this.user_id = id;
         this.user_email=email;
         this.user_name = name;
         this.user_weight = weight;

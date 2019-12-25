@@ -212,7 +212,7 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
             gender="female";
 
         if(user != null){
-            User newUser = new User(email,name,weight,height,birthday,gender);
+            User newUser = new User(userID,email,name,weight,height,birthday,gender);
             myRef.child("Users").child(userID).setValue(newUser);
 
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
