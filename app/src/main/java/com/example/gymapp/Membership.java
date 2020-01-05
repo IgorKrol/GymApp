@@ -9,6 +9,7 @@ public class Membership {
     private String pid;
     private String phone;
     private String address;
+    private String isActive;
 
     public Membership(String user, String type, String startDate, String endDate, String id, String phone, String address) {
         this.userID = user;
@@ -18,6 +19,7 @@ public class Membership {
         this.pid = id;
         this.phone = phone;
         this.address = address;
+        this.isActive = "true";
     }
 
     public String getMembershipID() {

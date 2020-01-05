@@ -140,6 +140,7 @@ public class BuyoutActivity extends AppCompatActivity {
         membership.setMembershipID(myRef.push().getKey());
         myRef.child("Memberships").child(membership.getMembershipID()).setValue(membership);
         myRef.child("Users").child(userID).child("membership").setValue(membership);
+        myRef.child("Users").child(userID).child("isMember").setValue("true");
 
 
 

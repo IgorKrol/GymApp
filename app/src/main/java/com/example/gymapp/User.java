@@ -9,6 +9,7 @@ public class User {
     public String user_weight;
     public String user_height;
     public String user_gender;
+    public String isMember;
     private Membership membership;
 
     public User(String email,String name,String weight,String height,String birthday,String gender)
@@ -20,6 +21,7 @@ public class User {
         this.user_height = height;
         this.user_birthday = birthday;
         this.user_gender = gender;
+        this.isMember = "false";
     }
 
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,19 +19,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
     Button btnInstructors,btnBuy;
     FirebaseAuth mAuth;
     private FirebaseUser user;
 
-    TextView welcomeText;
+
+    TextView welcomeText,membershipText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        welcomeText = findViewById(R.id.welcome_text_2);
+        membershipText = findViewById(R.id.membership_text);
         mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+
 
         btnInstructors = (Button)findViewById(R.id.instractors_button);
         btnInstructors.setOnClickListener(new View.OnClickListener() {
@@ -40,16 +52,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btnBuy = (Button)findViewById(R.id.buy_button);
+
+
+
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, DeclarationActivity.class));
+                if(mAuth.getCurrentUser()!=null)
+                {
+if(membershipText.getText().toString().equals("Membership: inactive"))
+                    startActivity(new Intent(MainActivity.this, DeclarationActivity.class));
+else
+    Toast.makeText(MainActivity.this, "Still got active membership",
+            Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                    Toast.makeText(MainActivity.this, "You need to register first",
+                            Toast.LENGTH_SHORT).show();
             }
         });
         //~~~display welcome text~~~//
 
-        welcomeText = findViewById(R.id.welcome_text_2);
-        user = mAuth.getCurrentUser();
         if(user!=null) {
 
             String userID = user.getUid();
@@ -60,6 +84,24 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String userName =  dataSnapshot.child("user_name").getValue().toString();
                     welcomeText.setText("Welcome "+userName);
+                    String isMember = dataSnapshot.child("isMember").getValue().toString();
+                    if(isMember.equals("true")) {
+                        String dateString = dataSnapshot.child("membership").child("endDate").getValue().toString();
+                        try {
+                            Date date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dateString);
+                            boolean activeMemb = isActiveMemb(date);
+                            if (activeMemb)
+                                membershipText.setText("Membership: active");
+                            else
+                                {
+                                membershipText.setText("Membership: inactive");
+
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
 
                 }
 
@@ -73,6 +115,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public boolean isActiveMemb (Date date)
+    {
+        Calendar cal = Calendar.getInstance();
+        Date currentDate = cal.getTime();
+        int ans = currentDate.compareTo(date);
+        if(ans>0)
+        return false;
+        else
+            return true;
+    }
+
     /* menu creation */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -80,10 +133,12 @@ public class MainActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser()!=null) {
             menu.findItem(R.id.login).setVisible(false);
             menu.findItem(R.id.logout).setVisible(true);
+
         }
         else{
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.logout).setVisible(false);
+
         }
         return true;
     }
@@ -103,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.logout:
                 startActivity(new Intent(MainActivity.this,SignoutActivity.class));
                 return true;
+
+
             default:
                 return super.onOptionsItemSelected(item);
         }
