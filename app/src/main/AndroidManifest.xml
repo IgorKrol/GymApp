@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".My_appointments"></activity>
+        <activity android:name=".BuyoutActivity"></activity>
+        <activity android:name=".DeclarationActivity"/>
+        <activity android:name=".My_appointments" />
         <activity android:name=".Instructor_info" />
         <activity android:name=".SignoutActivity" />
         <activity android:name=".ForgotPasswordActivity" />

@@ -179,11 +179,11 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
                     Toast.LENGTH_SHORT).show();
         }
         else {
-            mAuth.createUserWithEmailAndPassword(email, password)
+            mAuth.createUserWithEmailAndPassword(email, password) //create firebase user
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+                            if (task.isSuccessful()) { //if we managed to create auth
                                 // Sign in success, update UI with the signed-in user's information
                                 userProfile();
                             } else {
@@ -212,7 +212,7 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
             gender="female";
 
         if(user != null){
-            User newUser = new User(userID,email,name,weight,height,birthday,gender);
+            User newUser = new User(email,name,weight,height,birthday,gender);
             myRef.child("Users").child(userID).setValue(newUser);
 
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()

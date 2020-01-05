@@ -19,11 +19,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnInstructors;
+    Button btnInstructors,btnBuy;
     FirebaseAuth mAuth;
     private FirebaseUser user;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
+
     TextView welcomeText;
 
     @Override
@@ -38,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, instructors.class));
+            }
+        });
+        btnBuy = (Button)findViewById(R.id.buy_button);
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DeclarationActivity.class));
             }
         });
         //~~~display welcome text~~~//
