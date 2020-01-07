@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,13 +70,14 @@ public class DevicesActivity extends AppCompatActivity {
 //
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DeviceData dd = listViewItems.get(position);
-//                String url = dd.getUrl();
-                Log.i("URL", "111");
-//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//                if (browserIntent.resolveActivity(getPackageManager()) != null) {
-//                    // Here we use an intent without a Chooser unlike the next example
-//                    startActivity(browserIntent);
-//                }
+                String url = dd.getUrl();
+                if (!url.startsWith("http://") && !url.startsWith("https://"))
+                    url = "http://" + url;
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                if (browserIntent.resolveActivity(getPackageManager()) != null) {
+                    // Here we use an intent without a Chooser unlike the next example
+                    startActivity(browserIntent);
+                }
             }
         });
     }
