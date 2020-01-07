@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BuyoutActivity"></activity>
-        <activity android:name=".DeclarationActivity"/>
+        <activity android:name=".AddDeviceActivity"></activity>
+        <activity android:name=".BuyoutActivity" />
+        <activity android:name=".DeclarationActivity" />
+        <activity android:name=".DevicesActivity" />
         <activity android:name=".My_appointments" />
         <activity android:name=".Instructor_info" />
         <activity android:name=".SignoutActivity" />

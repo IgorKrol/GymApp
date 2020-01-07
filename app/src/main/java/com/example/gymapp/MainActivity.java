@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnInstructors,btnBuy;
+    Button btnInstructors,btnBuy,btnDevices;
     FirebaseAuth mAuth;
     private FirebaseUser user;
 
@@ -42,8 +42,13 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-
-
+        btnDevices = (Button)findViewById(R.id.devices_button) ;
+        btnDevices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DevicesActivity.class));
+            }
+        });
         btnInstructors = (Button)findViewById(R.id.instractors_button);
         btnInstructors.setOnClickListener(new View.OnClickListener() {
             @Override
