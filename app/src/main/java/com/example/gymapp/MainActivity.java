@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private FirebaseUser user;
     Boolean isManager=false;
+    Menu menu;
 
 
     TextView welcomeText,membershipText;
@@ -92,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     isManager=Boolean.parseBoolean(dataSnapshot.child("isManager").getValue().toString());
-                    Log.i("manage",isManager.toString());
+                    if(isManager){
+                        menu.findItem(R.id.manage).setVisible(true);
+                    }
+                    else menu.findItem(R.id.manage).setVisible(false);
                     String userName =  dataSnapshot.child("user_name").getValue().toString();
                     welcomeText.setText("Welcome "+userName);
                     String isMember = dataSnapshot.child("isMember").getValue().toString();
@@ -140,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /* menu creation */
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu2) {
+        menu=menu2;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         if(isManager){
