@@ -37,6 +37,7 @@ public class DevicesActivity extends AppCompatActivity {
         dbRootRef = DB.getReference();
 
         devListView = (ListView)findViewById(R.id.devicesListView);
+
         listViewItems  = new ArrayList<DeviceData>();
         ValueEventListener vel = dbRootRef.child("Devices").addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,8 +68,8 @@ public class DevicesActivity extends AppCompatActivity {
             @Override
 //
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DeviceData dd=listViewItems.get(position);
-                String url = dd.getUrl();
+                DeviceData dd = listViewItems.get(position);
+//                String url = dd.getUrl();
                 Log.i("URL", "111");
 //                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 //                if (browserIntent.resolveActivity(getPackageManager()) != null) {
