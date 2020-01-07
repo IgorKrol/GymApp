@@ -55,16 +55,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mAuth.getCurrentUser()!=null)
                 {
-if(membershipText.getText().toString().equals("Membership: inactive"))
-                    startActivity(new Intent(MainActivity.this, DeclarationActivity.class));
-else
-    Toast.makeText(MainActivity.this, "Still got active membership",
-            Toast.LENGTH_SHORT).show();
+                    if(membershipText.getText().toString().equals("Membership: inactive"))
+                        startActivity(new Intent(MainActivity.this, DeclarationActivity.class));
+                    else
+                        Toast.makeText(MainActivity.this, "Still got active membership",
+                                Toast.LENGTH_SHORT).show();
 
                 }
                 else
@@ -90,12 +92,14 @@ else
                         try {
                             Date date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dateString);
                             boolean activeMemb = isActiveMemb(date);
-                            if (activeMemb)
+                            if (activeMemb) {
                                 membershipText.setText("Membership: active");
+                                btnBuy.setVisibility(View.INVISIBLE);
+                            }
                             else
-                                {
+                            {
                                 membershipText.setText("Membership: inactive");
-
+                                btnBuy.setVisibility(View.VISIBLE);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -121,7 +125,7 @@ else
         Date currentDate = cal.getTime();
         int ans = currentDate.compareTo(date);
         if(ans>0)
-        return false;
+            return false;
         else
             return true;
     }
