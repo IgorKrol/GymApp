@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnInstructors,btnBuy,btnDevices;
     FirebaseAuth mAuth;
     private FirebaseUser user;
+    Boolean isManager=false;
 
 
     TextView welcomeText,membershipText;
@@ -89,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
             myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    isManager=Boolean.parseBoolean(dataSnapshot.child("isManager").getValue().toString());
+                    Log.i("manage",isManager.toString());
                     String userName =  dataSnapshot.child("user_name").getValue().toString();
                     welcomeText.setText("Welcome "+userName);
                     String isMember = dataSnapshot.child("isMember").getValue().toString();
@@ -139,6 +143,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+        if(isManager){
+            menu.findItem(R.id.manage).setVisible(true);
+        }
+            else menu.findItem(R.id.manage).setVisible(false);
+
+
         if(mAuth.getCurrentUser()!=null) {
             menu.findItem(R.id.login).setVisible(false);
             menu.findItem(R.id.logout).setVisible(true);
@@ -173,6 +183,8 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
 
 

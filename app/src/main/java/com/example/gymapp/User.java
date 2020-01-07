@@ -10,9 +10,10 @@ public class User {
     public String user_height;
     public String user_gender;
     public String isMember;
+    public String isManager;
     private Membership membership;
 
-    public User(String email,String name,String weight,String height,String birthday,String gender)
+    public User(String email,String name,String weight,String height,String birthday,String gender,String isManager)
     {
 
         this.user_email=email;
@@ -22,6 +23,7 @@ public class User {
         this.user_birthday = birthday;
         this.user_gender = gender;
         this.isMember = "false";
+        this.isManager=isManager;
     }
 
 
@@ -81,5 +83,13 @@ public class User {
 
     public void setEmail(String email) {
         this.user_email = email;
+    }
+
+    public String getManager() {
+        return isManager;
+    }
+
+    public void setManagerl(String isManager) {
+        this.isManager = isManager;
     }
 }
