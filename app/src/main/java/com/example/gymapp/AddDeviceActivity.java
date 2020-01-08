@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,9 +38,11 @@ public class AddDeviceActivity extends AppCompatActivity {
         btnAddDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dd = new DeviceData(name_input.getText().toString(),url_input.getText().toString() ,R.drawable.ic_launcher_foreground);
+                dd = new DeviceData(name_input.getText().toString(),url_input.getText().toString() ,R.drawable.gymapp_icon);
                 dd.setId(dbRootRef.push().getKey());
                 dbRootRef.child("Devices").child(dd.getId()).setValue(dd);
+                Toast.makeText(AddDeviceActivity.this,"Device added!",Toast.LENGTH_LONG).show();
+
             }
         });
 
