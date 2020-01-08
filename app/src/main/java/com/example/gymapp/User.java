@@ -2,16 +2,18 @@ package com.example.gymapp;
 
 public class User {
 
-    private String user_id;
-    private String user_email;
+
+    public String user_email;
     public String user_name;
     public String user_birthday;
     public String user_weight;
     public String user_height;
     public String user_gender;
-    public boolean member = false;
+    public String isMember;
+    public String isManager;
+    private Membership membership;
 
-    public User(String email,String name,String weight,String height,String birthday,String gender)
+    public User(String email,String name,String weight,String height,String birthday,String gender,String isManager)
     {
 
         this.user_email=email;
@@ -20,15 +22,11 @@ public class User {
         this.user_height = height;
         this.user_birthday = birthday;
         this.user_gender = gender;
+        this.isMember = "false";
+        this.isManager=isManager;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
 
     public String getUser_name() {
         return user_name;
@@ -70,18 +68,28 @@ public class User {
         this.user_gender = user_gender;
     }
 
-    public boolean isMember() {
-        return member;
+
+    public Membership getMembership() {
+        return membership;
     }
 
-    public void setMember(boolean member) {
-        this.member = member;
+    public void setMembership(Membership membership) {
+        this.membership = membership;
     }
+
     public String getEmail() {
         return user_email;
     }
 
     public void setEmail(String email) {
         this.user_email = email;
+    }
+
+    public String getManager() {
+        return isManager;
+    }
+
+    public void setManagerl(String isManager) {
+        this.isManager = isManager;
     }
 }

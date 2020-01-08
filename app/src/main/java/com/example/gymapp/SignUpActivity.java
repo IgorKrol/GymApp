@@ -43,7 +43,7 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
     EditText user_email,user_password,user_name,user_height,user_weight,confirm_password;
     TextView login_btn_on_signup,dateText;
     Button signup_btn, dateButton;
-    CheckBox checkFemale,checkMale;
+    CheckBox checkFemale,checkMale,isManager;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseDatabase mFirebaseDatabase;
@@ -66,6 +66,7 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
         login_btn_on_signup = (TextView) findViewById(R.id.login_btn_on_signup);
         login_btn_on_signup.setOnClickListener(this);
         signup_btn.setOnClickListener(this);
+        isManager= (CheckBox)findViewById(R.id.isManager);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -82,6 +83,13 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
 
         });
 
+/////////////////////manager//////////////////////
+        isManager.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                isManager.setChecked(true);
+            }
+        });
 
 //*-----Gender Chooser-----*//
         checkFemale = (CheckBox)findViewById(R.id.female);
@@ -179,11 +187,11 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
                     Toast.LENGTH_SHORT).show();
         }
         else {
-            mAuth.createUserWithEmailAndPassword(email, password)
+            mAuth.createUserWithEmailAndPassword(email, password) //create firebase user
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+                            if (task.isSuccessful()) { //if we managed to create auth
                                 // Sign in success, update UI with the signed-in user's information
                                 userProfile();
                             } else {
@@ -206,13 +214,18 @@ public class  SignUpActivity extends AppCompatActivity implements View.OnClickLi
         String weight = user_weight.getText().toString();
         String height = user_height.getText().toString();
         String birthday = dateText.getText().toString();
+
+        String Manager;
+        if(isManager.isChecked()) Manager="true";
+        else Manager = "false";
+
         if(checkMale.isChecked())
             gender="male";
         else
             gender="female";
 
         if(user != null){
-            User newUser = new User(email,name,weight,height,birthday,gender);
+            User newUser = new User(email,name,weight,height,birthday,gender,Manager);
             myRef.child("Users").child(userID).setValue(newUser);
 
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
