@@ -13,6 +13,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class My_appointments extends AppCompatActivity {
     FirebaseDatabase myDB;
     DatabaseReference dbRef;
@@ -47,7 +51,14 @@ public class My_appointments extends AppCompatActivity {
                             for(DataSnapshot instDSSdata : instructorDataSnapShot.getChildren()) {
                                 InstractorData inst = instDSSdata.getValue(InstractorData.class);
                                 if(inst.getId().equals(appointment.getInstructor_id())){    //if right instructor
-                                    out+="Date:   " + appointment.getDate().toString() + "\n" + "with:   " + inst.getName()+"\n";
+                                    try {
+                                        Date date = new SimpleDateFormat("dd/mm/yyyy").parse(appointment.getDate());
+                                        if(expiredDate(date))
+                                            out+="Date:   " + appointment.getDate().toString() + "\n" + "with:   " + inst.getName()+"\n";
+                                    }catch (Exception e){
+                                        Log.e("Date Ex",e.toString());
+                                    }
+
                                 }
                             }
                         }
@@ -64,5 +75,14 @@ public class My_appointments extends AppCompatActivity {
 
         dbRef.addValueEventListener(vel);
 
+    }
+    public boolean expiredDate(Date date){
+        Calendar cal = Calendar.getInstance();
+        Date currentDate = cal.getTime();
+        int ans = currentDate.compareTo(date);
+        if(ans>0)
+            return false;
+        else
+            return true;
     }
 }

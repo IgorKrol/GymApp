@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser user;
     Boolean isManager=false;
     Menu menu;
+    public static boolean isActiveMembership = false;
 
 
     TextView welcomeText,membershipText;
@@ -87,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(user!=null) {
 
-            String userID = user.getUid();
-            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users");
+            final String userID = user.getUid();
+            final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users");
 
             myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             Date date = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dateString);
                             boolean activeMemb = isActiveMemb(date);
+                            isActiveMembership = activeMemb;
                             if (activeMemb) {
                                 membershipText.setText("Membership: active");
                                 btnBuy.setVisibility(View.INVISIBLE);
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             {
                                 membershipText.setText("Membership: inactive");
                                 btnBuy.setVisibility(View.VISIBLE);
+                                myRef.child("Users").child(userID).child("isMember").setValue(false);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();

@@ -51,7 +51,12 @@ public class Instructor_info extends AppCompatActivity implements  DatePickerDia
             @Override
             public void onClick(View v)
             {
-                showDatePickerDialog();
+                if(!MainActivity.isActiveMembership){
+                    Toast.makeText(Instructor_info.this,"Membership is not active!",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    showDatePickerDialog();
+                }
             }
 //
         });
