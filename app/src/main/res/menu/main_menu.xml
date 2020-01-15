@@ -13,6 +13,9 @@
     <item
         android:id="@+id/appointment_menu"
         android:title="@string/Appointment"/>
+    <item
+        android:id="@+id/membership_status"
+        android:title="My Membership"/>
 
 
 

@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
             }
         });
-        //~~~display welcome text~~~//
+        //~~~display welcome text and show membership status~~~//
 
         if(user!=null) {
 
@@ -161,11 +161,16 @@ public class MainActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser()!=null) {
             menu.findItem(R.id.login).setVisible(false);
             menu.findItem(R.id.logout).setVisible(true);
+            menu.findItem(R.id.appointment_menu).setVisible(true);
+            menu.findItem(R.id.membership_status).setVisible(true);
+
 
         }
         else{
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.appointment_menu).setVisible(false);
+            menu.findItem(R.id.membership_status).setVisible(false);
 
         }
         return true;
@@ -185,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 startActivity(new Intent(MainActivity.this,SignoutActivity.class));
+                return true;
+            case R.id.membership_status:
+                startActivity(new Intent(MainActivity.this,My_membership.class));
                 return true;
 
 
